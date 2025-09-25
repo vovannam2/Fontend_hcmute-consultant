@@ -1,0 +1,162 @@
+import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useMutation, useQuery } from '@tanstack/react-query'
+
+import { createRating, getPastRating, getRatingById } from '@/apis/consultant.api'
+import { Button } from '@/components/ui/button'
+import { Form } from '@/components/ui/form'
+import { Separator } from '@/components/ui/separator'
+import path from '@/constants/path'
+import { toast } from 'sonner'
+import EvaluationChooseConsultant from '@/pages/User/ConsultantEvaluation/components/EvaluationChooseConsultant'
+import EvaluationForm from '@/pages/User/ConsultantEvaluation/components/EvaluationForm'
+import { RatingSchema } from '@/utils/rules'
+import useQueryParams from '@/hooks/useQueryParams'
+import { useEffect, useRef } from 'react'
+
+export interface RatingFormData {
+  consultantId: string
+  departmentId: string
+  generalSatisfaction: string
+  generalComment?: string
+  expertiseKnowledge: string
+  expertiseComment?: string
+  attitude: string
+  attitudeComment?: string
+  responseSpeed: string
+  responseSpeedComment?: string
+  understanding: string
+  understandingComment?: string
+}
+
+export default function ConsultantEvaluation() {
+  const { id } = useQueryParams()
+  const formDefaultValue: RatingFormData = {
+    consultantId: '',
+    departmentId: '',
+    generalSatisfaction: '',
+    generalComment: undefined,
+    expertiseKnowledge: '',
+    expertiseComment: undefined,
+    attitude: '',
+    attitudeComment: undefined,
+    responseSpeed: '',
+    responseSpeedComment: undefined,
+    understanding: '',
+    understandingComment: undefined
+  }
+  const form = useForm<RatingFormData>({
+    defaultValues: formDefaultValue,
+    resolver: yupResolver(RatingSchema) as any
+  })
+
+  const navigate = useNavigate()
+
+  const createRatingMutation = useMutation({
+    mutationFn: (body: RatingFormData) => createRating(body)
+  })
+
+  const consultantId = form.watch('consultantId')
+  const { data: pastRating } = useQuery({
+    queryKey: ['past-rating', consultantId],
+    queryFn: () => getPastRating(consultantId),
+    enabled: !!consultantId && !id
+  })
+
+  const { data: userRating } = useQuery({
+    queryKey: ['user-rating', id],
+    queryFn: () => getRatingById(id),
+    enabled: !!id
+  })
+
+  const isViewed = (!!userRating && !!userRating.data.data) || (!!pastRating && !!pastRating.data.data)
+  const isDisabledSelection = !!userRating
+  const isFormReset = useRef<boolean>(!isViewed)
+
+  // handle evaluation process
+  const onSubmit = form.handleSubmit((values) => {
+    createRatingMutation.mutate(values, {
+      onSuccess: (res) => {
+        toast.success(res.data.message)
+        navigate(path.home)
+      }
+    })
+  })
+
+  useEffect(() => {
+    if (!userRating && !pastRating) return
+    if (userRating && !userRating.data.data) return
+    if (pastRating && !pastRating.data.data) return
+    const data = userRating ? userRating.data.data : pastRating?.data.data
+    form.reset({
+      consultantId: String(data?.consultant.id),
+      departmentId: String(data?.department.id),
+      generalSatisfaction: String(data?.generalSatisfaction),
+      generalComment: data?.generalComment,
+      expertiseKnowledge: String(data?.expertiseKnowledge),
+      expertiseComment: data?.expertiseComment,
+      attitude: String(data?.attitude),
+      attitudeComment: data?.attitudeComment,
+      responseSpeed: String(data?.responseSpeed),
+      responseSpeedComment: data?.responseSpeedComment,
+      understanding: String(data?.understanding),
+      understandingComment: data?.understandingComment
+    })
+    isFormReset.current = true
+  }, [userRating, pastRating])
+
+  useEffect(() => {
+    if (isViewed) return
+    form.reset({
+      consultantId: String(form.watch('consultantId')),
+      departmentId: String(form.watch('departmentId')),
+      generalSatisfaction: '',
+      generalComment: undefined,
+      expertiseKnowledge: '',
+      expertiseComment: undefined,
+      attitude: '',
+      attitudeComment: undefined,
+      responseSpeed: '',
+      responseSpeedComment: undefined,
+      understanding: '',
+      understandingComment: undefined
+    })
+  }, [isViewed])
+
+  return (
+    <div>
+      {isFormReset && (
+        <div className='bg-primary-bg'>
+          <div className='container'>
+            <div className='flex justify-center'>
+              <div className='lg:w-3/4 w-full bg-background text-foreground px-6 py-2 rounded-lg shadow-xl border mt-6'>
+                <h1 className='font-extrabold text-2xl text-center uppercase mb-6 text-primary'>
+                  {!isViewed ? 'Đánh giá ban tư vấn' : 'Kết quả đánh giá'}
+                </h1>
+                <Form {...form}>
+                  <EvaluationChooseConsultant form={form as any} isDisabledSelection={isDisabledSelection} />
+                  <form onSubmit={onSubmit}>
+                    <Separator className='mt-8 mb-4 col-span-12' />
+                    <EvaluationForm form={form as any} isViewed={isViewed} />
+                    {!isViewed && (
+                      <div className='flex items-center justify-end'>
+                        <Button
+                          isLoading={createRatingMutation.isPending}
+                          disabled={createRatingMutation.isPending}
+                          className='px-6 py-2'
+                        >
+                          Gửi kết quả
+                        </Button>
+                      </div>
+                    )}
+                  </form>
+                </Form>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}

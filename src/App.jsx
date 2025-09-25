@@ -1,16 +1,17 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-
+import { BrowserRouter } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import useRouteElement from './hooks/useRouteElement'
 
 function App() {
+  const routeElement = useRouteElement()
+  const queryClient = new QueryClient()
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <h1 className="text-3xl font-bold underline text-blue-600">
-          Hello Tailwind v3 + React + Vite 🚀
-      </h1>
-    </div>
-  );
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        {routeElement}
+      </BrowserRouter>
+    </QueryClientProvider>
+  )
 }
 
 export default App;
