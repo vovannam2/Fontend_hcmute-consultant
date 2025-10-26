@@ -1,3 +1,104 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 47.4% 11.2%;
+  --primary: 221.2 83.2% 53.3%;
+  --primary-foreground: 210 40% 98%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 47.4% 11.2%;
+
+  /* 🔹 thêm các token cần dùng cho Dropdown highlight */
+  --accent: 210 40% 96%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+
+  /* (khuyến nghị) vài token hay dùng kèm shadcn */
+  --muted: 210 40% 96%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 221.2 83.2% 53.3%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 47.4% 11.2%;
+  
+  /* Header height variable */
+  --header-height: 64px;
+}
+
+/* Force z-index cho SelectContent trong Dialog */
+[data-radix-select-content] {
+  z-index: 999999 !important;
+  background: white !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  position: fixed !important;
+  max-height: 12rem !important;
+  overflow-y: auto !important;
+}
+
+/* Force z-index cho PopoverContent */
+[data-radix-popover-content] {
+  z-index: 999999 !important;
+  background: white !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  position: fixed !important;
+  max-height: 20rem !important;
+  overflow-y: auto !important;
+}
+
+/* Force z-index cho DropdownMenuContent */
+[data-radix-dropdown-menu-content] {
+  z-index: 999999 !important;
+  background: white !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  position: fixed !important;
+  max-height: 20rem !important;
+  overflow-y: auto !important;
+}
+
+/* Đảm bảo DialogContent không cắt dropdown */
+[data-radix-dialog-content] {
+  overflow: visible !important;
+  position: relative !important;
+  z-index: 10 !important;
+  isolation: auto !important;
+}
+
+/* Đảm bảo Dialog overlay không che dropdown */
+[data-radix-dialog-overlay] {
+  z-index: 40 !important;
+}
+
+/* Style cho SelectItem trong Dialog */
+[data-radix-select-content] [data-radix-select-item] {
+  padding: 0.5rem 0.75rem !important;
+  cursor: pointer !important;
+  border-radius: 0.25rem !important;
+  margin: 0.125rem !important;
+}
+
+[data-radix-select-content] [data-radix-select-item]:hover {
+  background-color: #f3f4f6 !important;
+}
+
+[data-radix-select-content] [data-radix-select-item][data-highlighted] {
+  background-color: #3b82f6 !important;
+  color: white !important;
+}
+
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --primary: 217.2 91.2% 59.8%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+}
+
+
+/* Utility: Chiều cao phần còn lại của màn hình (tuỳ chỉnh theo chiều cao header) */
+.h-remain-screen { height: calc(100vh - var(--header-height)); }
