@@ -1,4 +1,4 @@
-import { getPosts } from '@/apis/post.api'
+import { getPublicPosts } from '@/apis/post.api'
 import { Button } from '@/components/ui/button'
 import usePostQueryConfig from '@/hooks/usePostQueryConfig'
 import ItemPost from '@/pages/User/Home/components/ListPost/components/ConsultActivity/ItemPost'
@@ -7,14 +7,11 @@ import { useMemo, useState } from 'react'
 import { Newspaper } from 'lucide-react'
 
 export default function ListPost() {
-  let postQueryConfig = usePostQueryConfig()
-  postQueryConfig = {
-    ...postQueryConfig,
-    isApproved: String(true)
-  }
+  const postQueryConfig = usePostQueryConfig()
+  
   const { data: posts, isLoading, isError } = useQuery({
-    queryKey: ['posts', postQueryConfig],
-    queryFn: () => getPosts(postQueryConfig),
+    queryKey: ['public-posts', postQueryConfig],
+    queryFn: () => getPublicPosts(postQueryConfig),
     refetchOnWindowFocus: false
   })
 

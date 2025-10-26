@@ -8,6 +8,11 @@ export const getPosts = (params: PostQueryConfig) =>
     params
   })
 
+export const getPublicPosts = (params: PostQueryConfig) =>
+  http.get<SuccessResponse<PaginationResponse<Post[]>>>('post/public', {
+    params
+  })
+
 export const createPost = (body: PostRequest) =>
   http.post<SuccessResponse<string>>('post', body, {
     headers: {
