@@ -108,17 +108,15 @@ NEXT_PUBLIC_API_URL=http://localhost:9090
 ```bash
 npm run dev
 ```
-###🌐 Kết nối Backend
-
+### 🌐 Kết nối Backend
 Tạo file .env ở thư mục gốc của frontend:
 ```bash
 VITE_API_BASE_URL=http://localhost:5001/api
 ```
-###👨‍💻 Tác giả
-
+### 👨‍💻 Tác giả
 Nhóm phát triển Fullstack – HCMUTE
 | Thành viên              | Vai trò                      |
 | ----------------------- | ---------------------------- |
 | 🧑‍💻 **Châu Văn Thân** | Frontend & Backend Developer |
-| 👩‍💻 **Trần Mai Di**   | UI/UX & Frontend Developer   |
-| 👨‍💻 **Võ Văn Nam**    | Backend Developer            |
+| 👩‍💻 **Trần Mai Di**   | Frontend & Backend Developerr   |
+| 👨‍💻 **Võ Văn Nam**    | Frontend & Backend Developer            |
