@@ -72,16 +72,53 @@ frontend/
 ├── .env.example
 ├── package.json
 └── README.md
-| **Mảng**                  | **Công nghệ sử dụng**                                                        |
-| ------------------------- | ---------------------------------------------------------------------------- |
-| **Frontend Framework**    | [Next.js 14](https://nextjs.org/)                                            |
-| **Ngôn ngữ**              | [TypeScript](https://www.typescriptlang.org/)                                |
-| **UI Framework**          | [TailwindCSS](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/) |
-| **Chart & Visualization** | [Recharts](https://recharts.org/)                                            |
-| **HTTP Client**           | [Axios](https://axios-http.com/)                                             |
-| **Icons**                 | [Lucide React](https://lucide.dev/icons)                                     |
-| **Font**                  | [Geist Font](https://vercel.com/fonts/geist)                                 |
-| **State Management**      | React Hooks / Context API                                                    |
-| **Auth Integration**      | JWT Token (localStorage)                                                     |
-| **Build Tool**            | [Vite](https://vitejs.dev/)                                                  |
-| **Deployment**            | [Vercel](https://vercel.com/) / [Netlify](https://www.netlify.com/)          |
+## ⚙️ Installation Guide
+
+###1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/vovannam2/Fontend_hcmute-consultant.git
+cd Frontend_hcmute-consultant
+```
+
+---
+
+### 2️⃣ Install Dependencies
+
+```bash
+npm install
+# hoặc
+yarn install
+```
+
+---
+
+### 3️⃣ Configure Environment Variables
+
+Tạo file `.env.local` trong thư mục gốc:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:9090
+```
+
+---
+
+### 4️⃣ Run Development Server
+
+```bash
+npm run dev
+```
+###🌐 Kết nối Backend
+
+Tạo file .env ở thư mục gốc của frontend:
+```bash
+VITE_API_BASE_URL=http://localhost:5001/api
+```
+###👨‍💻 Tác giả
+
+Nhóm phát triển Fullstack – HCMUTE
+| Thành viên              | Vai trò                      |
+| ----------------------- | ---------------------------- |
+| 🧑‍💻 **Châu Văn Thân** | Frontend & Backend Developer |
+| 👩‍💻 **Trần Mai Di**   | UI/UX & Frontend Developer   |
+| 👨‍💻 **Võ Văn Nam**    | Backend Developer            |
