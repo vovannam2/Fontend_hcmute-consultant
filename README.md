@@ -117,6 +117,6 @@ VITE_API_BASE_URL=http://localhost:5001/api
 Nhóm phát triển Fullstack – HCMUTE
 | Thành viên              | Vai trò                      |
 | ----------------------- | ---------------------------- |
-| 🧑‍💻 **Châu Văn Thân** | Frontend & Backend Developer |
-| 👩‍💻 **Trần Mai Di**   | Frontend & Backend Developerr   |
-| 👨‍💻 **Võ Văn Nam**    | Frontend & Backend Developer            |
+| 🧑‍💻 **Châu Văn Thân** | FullStack Developer |
+| 👩‍💻 **Trần Mai Di**   | FullStack Developer   |
+| 👨‍💻 **Võ Văn Nam**    | FullStack Developer            |
